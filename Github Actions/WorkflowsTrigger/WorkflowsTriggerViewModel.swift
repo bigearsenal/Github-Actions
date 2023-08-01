@@ -22,7 +22,7 @@ class WorkflowTriggerViewModel: ObservableObject {
     @Published private(set) var branches: [String] = []
 
     @Published private(set) var booleanOptions: [String: Bool] = [:]
-    @Published private(set) var stringOptions: [String: String] = [:]
+    @Published var stringOptions: [String: String] = [:]
 
     // MARK: - Properties
 
@@ -85,18 +85,7 @@ class WorkflowTriggerViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Helpers
-
-    private func fetchWorkflows() async throws {
-        workflows = try await api.getWorkflows()
-    }
-
-    private func fetchBranches() async throws {
-        branches = try await api.getBranches()
-        originalBranches = branches
-    }
-
-    private func triggerGitHubWorkflow() {
+    func triggerGitHubWorkflow() {
         isTriggeringWorkflow = true
         Task {
             defer { isTriggeringWorkflow = false }
@@ -115,6 +104,17 @@ class WorkflowTriggerViewModel: ObservableObject {
                 alertMessage = AlertMessage(message: "Error triggering workflow: \(error)")
             }
         }
+    }
+
+    // MARK: - Helpers
+
+    private func fetchWorkflows() async throws {
+        workflows = try await api.getWorkflows()
+    }
+
+    private func fetchBranches() async throws {
+        branches = try await api.getBranches()
+        originalBranches = branches
     }
 
     private func getWorkflowInputs() -> [String: String] {

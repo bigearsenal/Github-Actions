@@ -39,6 +39,8 @@ struct WorkflowsTriggerView: View {
         }
     }
 
+    // MARK: - View Builders
+
     @ViewBuilder
     private var loadingView: some View {
         ProgressView("Loading...")
@@ -47,13 +49,34 @@ struct WorkflowsTriggerView: View {
 
     @ViewBuilder
     private var loadedView: some View {
+        selectWorkflowView
+
+        if viewModel.selectedBranch.isEmpty {
+            selectBranchView
+        } else {
+            currentSelectedBranchView
+                .padding(.bottom, 20)
+
+            optionsView
+
+            Spacer()
+
+            triggerButton
+        }
+    }
+
+    @ViewBuilder
+    private var selectWorkflowView: some View {
         Picker("Select Workflow", selection: $viewModel.selectedWorkflow) {
             Text("No selection")
             ForEach(viewModel.workflows, id: \.self) { workflow in
                 Text(workflow.name)
             }
         }
+    }
 
+    @ViewBuilder
+    private var selectBranchView: some View {
         HStack {
             Text("Select Branch:")
             TextField("Search Branch", text: $searchText)
@@ -71,30 +94,37 @@ struct WorkflowsTriggerView: View {
             }
         }
         .listStyle(.plain)
+    }
 
-        //                if let options = viewModel.selectedWorkflow?.options {
-        //                    ForEach(options, id: \.name) { option in
-        //                        if option.type == .boolean {
-        //                            Toggle(option.name, isOn: $viewModel.booleanOptions[option.name, default: false])
-        //                        } else if option.type == .string {
-        //                            TextField(option.name, text: $viewModel.stringOptions[option.name, default: ""])
-        //                                .textFieldStyle(RoundedBorderTextFieldStyle())
-        //                                .padding()
-        //                        }
-        //                    }
-        //                }
-        //
-        //                Button(action: {
-        //                    viewModel.triggerGitHubWorkflow()
-        //                }) {
-        //                    Text("Trigger Workflow")
-        //                        .padding()
-        //                        .foregroundColor(.white)
-        //                        .background(Color.blue)
-        //                        .cornerRadius(8)
-        //                }
+    @ViewBuilder
+    private var currentSelectedBranchView: some View {
+        HStack {
+            Text("Selected Branch: \(viewModel.selectedBranch)")
 
-        Spacer()
+            Button {
+                viewModel.selectedBranch = ""
+            } label: {
+                Image(systemName: "x.circle.fill")
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var optionsView: some View {
+        Text("Options")
+    }
+
+    @ViewBuilder
+    private var triggerButton: some View {
+        Button(action: {
+            viewModel.triggerGitHubWorkflow()
+        }) {
+            Text("Trigger Workflow")
+                .padding()
+                .foregroundColor(.white)
+                .background(Color.blue)
+                .cornerRadius(8)
+        }
     }
 }
 
