@@ -84,6 +84,7 @@ struct WorkflowsTriggerView: View {
             Text("Select Branch:")
             TextField("Search Branch", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .disableAutocorrection(true)
                 .padding(.horizontal)
         }
 
