@@ -84,7 +84,9 @@ final class GithubAPI {
         }
         var request = URLRequest(url: url)
         request.httpMethod = method
-        request.addValue("token \(personalAccessToken)", forHTTPHeaderField: "Authorization")
+        if !personalAccessToken.isEmpty {
+            request.addValue("token \(personalAccessToken)", forHTTPHeaderField: "Authorization")
+        }
         request.addValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
 
         if let body = body {
