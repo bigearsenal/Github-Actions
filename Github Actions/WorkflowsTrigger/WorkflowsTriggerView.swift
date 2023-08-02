@@ -21,11 +21,13 @@ struct WorkflowsTriggerView: View {
     }
 
     var body: some View {
-        VStack {
-            if viewModel.isRefreshing {
-                loadingView
-            } else {
-                loadedView
+        ScrollView {
+            LazyVStack {
+                if viewModel.isRefreshing {
+                    loadingView
+                } else {
+                    loadedView
+                }
             }
         }
         .onAppear {
@@ -50,11 +52,7 @@ struct WorkflowsTriggerView: View {
 
     @ViewBuilder
     private var loadedView: some View {
-        Button {
-            viewModel.refresh.send()
-        } label: {
-            Text("Reload")
-        }
+        reloadButton
 
         selectWorkflowView
 
@@ -69,6 +67,14 @@ struct WorkflowsTriggerView: View {
             Spacer()
 
             triggerButton
+        }
+    }
+
+    @ViewBuilder var reloadButton: some View {
+        Button {
+            viewModel.refresh.send()
+        } label: {
+            Text("Reload")
         }
     }
 
@@ -89,19 +95,17 @@ struct WorkflowsTriggerView: View {
             TextField("Search Branch", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .disableAutocorrection(true)
+                .autocapitalization(.none)
                 .padding(.horizontal)
         }
 
-        List {
-            ForEach(viewModel.branches, id: \.self) { branch in
-                Button(action: {
-                    viewModel.selectedBranch = branch
-                }) {
-                    Text(branch)
-                }
+        ForEach(viewModel.branches, id: \.self) { branch in
+            Button(action: {
+                viewModel.selectedBranch = branch
+            }) {
+                Text(branch)
             }
         }
-        .listStyle(.plain)
     }
 
     @ViewBuilder
