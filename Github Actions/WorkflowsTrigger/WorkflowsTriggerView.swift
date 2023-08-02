@@ -32,10 +32,11 @@ struct WorkflowsTriggerView: View {
         }
         .refreshable {
             viewModel.refresh.send()
-            try? await viewModel
+            _ = try? await viewModel
                 .$isRefreshing
-                .filter { $0 == false }
-                .map { _ in () }
+                .dropFirst() // Drop first since isRefreshing is not set immediately to true
+                .first(where: { $0 == false })
+                .receive(on: RunLoop.main)
                 .eraseToAnyPublisher()
                 .async()
         }
@@ -55,8 +56,7 @@ struct WorkflowsTriggerView: View {
 
     @ViewBuilder
     private var loadingView: some View {
-        ProgressView("Loading...")
-            .progressViewStyle(CircularProgressViewStyle())
+        Text("Loading...")
     }
 
     @ViewBuilder

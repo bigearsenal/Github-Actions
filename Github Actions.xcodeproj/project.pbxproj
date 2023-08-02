@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3B1D36392A7A14D7007BCB99 /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1D36382A7A14D7007BCB99 /* URLSessionProtocol.swift */; };
 		3B1D363D2A7A388E007BCB99 /* Publisher+async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1D363C2A7A388E007BCB99 /* Publisher+async.swift */; };
+		3B1D363F2A7A40D7007BCB99 /* WorkflowsTriggerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1D363E2A7A40D7007BCB99 /* WorkflowsTriggerInteractor.swift */; };
 		3B90690E2A78DC13004E90C9 /* Github_ActionsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B90690D2A78DC13004E90C9 /* Github_ActionsApp.swift */; };
 		3B9069102A78DC13004E90C9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B90690F2A78DC13004E90C9 /* ContentView.swift */; };
 		3B9069122A78DC14004E90C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B9069112A78DC14004E90C9 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		3B1D36382A7A14D7007BCB99 /* URLSessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
 		3B1D363C2A7A388E007BCB99 /* Publisher+async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+async.swift"; sourceTree = "<group>"; };
+		3B1D363E2A7A40D7007BCB99 /* WorkflowsTriggerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowsTriggerInteractor.swift; sourceTree = "<group>"; };
 		3B90690A2A78DC13004E90C9 /* Github Actions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Github Actions.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B90690D2A78DC13004E90C9 /* Github_ActionsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Github_ActionsApp.swift; sourceTree = "<group>"; };
 		3B90690F2A78DC13004E90C9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			children = (
 				3B90691B2A78DC59004E90C9 /* WorkflowsTriggerView.swift */,
 				3B9069212A78DF44004E90C9 /* WorkflowsTriggerViewModel.swift */,
+				3B1D363E2A7A40D7007BCB99 /* WorkflowsTriggerInteractor.swift */,
 				3B90691F2A78DD00004E90C9 /* WorkflowsTrigger+Models.swift */,
 			);
 			path = WorkflowsTrigger;
@@ -195,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B1D363F2A7A40D7007BCB99 /* WorkflowsTriggerInteractor.swift in Sources */,
 				3B1D36392A7A14D7007BCB99 /* URLSessionProtocol.swift in Sources */,
 				3B9069102A78DC13004E90C9 /* ContentView.swift in Sources */,
 				3B9069252A78DFB2004E90C9 /* GithubAPI.swift in Sources */,
