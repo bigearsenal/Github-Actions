@@ -30,6 +30,15 @@ struct WorkflowsTriggerView: View {
                 }
             }
         }
+        .refreshable {
+            viewModel.refresh.send()
+            try? await viewModel
+                .$isRefreshing
+                .filter { $0 == false }
+                .map { _ in () }
+                .eraseToAnyPublisher()
+                .async()
+        }
         .onAppear {
             viewModel.refresh.send()
         }
