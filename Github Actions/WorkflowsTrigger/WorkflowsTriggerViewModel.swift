@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 @MainActor
@@ -24,19 +25,36 @@ class WorkflowTriggerViewModel: ObservableObject {
     @Published private(set) var booleanOptions: [String: Bool] = [:]
     @Published var stringOptions: [String: String] = [:]
 
+    // MARK: - Actions
+
+    let refresh = PassthroughSubject<Void, Never>()
+
     // MARK: - Properties
 
     private var originalBranches: [String] = []
+    private var subscriptions = Set<AnyCancellable>()
 
     // MARK: - Initializer
 
     init(api: GithubAPI) {
         self.api = api
+        bindActions()
+    }
+
+    // MARK: - Binding
+
+    private func bindActions() {
+        refresh
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
+            .sink { [weak self] in
+                self?._refresh()
+            }
+            .store(in: &subscriptions)
     }
 
     // MARK: - Methods
 
-    func refresh() {
+    private func _refresh() {
         isRefreshing = true
         booleanOptions = [:]
         stringOptions = [:]

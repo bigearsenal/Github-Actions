@@ -25,10 +25,7 @@ struct WorkflowsTriggerView: View {
             }
         }
         .onAppear {
-            viewModel.refresh()
-        }
-        .refreshable {
-            viewModel.refresh()
+            viewModel.refresh.send()
         }
         .padding()
         .onChange(of: searchText) { newValue in
@@ -49,6 +46,12 @@ struct WorkflowsTriggerView: View {
 
     @ViewBuilder
     private var loadedView: some View {
+        Button {
+            viewModel.refresh.send()
+        } label: {
+            Text("Reload")
+        }
+
         selectWorkflowView
 
         if viewModel.selectedBranch.isEmpty {
