@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B1D36392A7A14D7007BCB99 /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1D36382A7A14D7007BCB99 /* URLSessionProtocol.swift */; };
 		3B90690E2A78DC13004E90C9 /* Github_ActionsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B90690D2A78DC13004E90C9 /* Github_ActionsApp.swift */; };
 		3B9069102A78DC13004E90C9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B90690F2A78DC13004E90C9 /* ContentView.swift */; };
 		3B9069122A78DC14004E90C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B9069112A78DC14004E90C9 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B1D36382A7A14D7007BCB99 /* URLSessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
 		3B90690A2A78DC13004E90C9 /* Github Actions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Github Actions.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B90690D2A78DC13004E90C9 /* Github_ActionsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Github_ActionsApp.swift; sourceTree = "<group>"; };
 		3B90690F2A78DC13004E90C9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				3B9069242A78DFB2004E90C9 /* GithubAPI.swift */,
+				3B1D36382A7A14D7007BCB99 /* URLSessionProtocol.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B1D36392A7A14D7007BCB99 /* URLSessionProtocol.swift in Sources */,
 				3B9069102A78DC13004E90C9 /* ContentView.swift in Sources */,
 				3B9069252A78DFB2004E90C9 /* GithubAPI.swift in Sources */,
 				3B9069202A78DD00004E90C9 /* WorkflowsTrigger+Models.swift in Sources */,

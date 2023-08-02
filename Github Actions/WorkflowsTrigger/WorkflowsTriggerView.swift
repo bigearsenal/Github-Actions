@@ -2,7 +2,7 @@ import SwiftUI
 
 struct WorkflowsTriggerView: View {
     @StateObject private var viewModel = WorkflowTriggerViewModel(
-        api: GithubAPIImpl(
+        api: GithubAPI(
             repositoryOwner: "p2p-org",
             repositoryName: "p2p-wallet-ios",
             personalAccessToken: "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"
