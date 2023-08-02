@@ -1,14 +1,24 @@
 import SwiftUI
 
 struct WorkflowsTriggerView: View {
-    @StateObject private var viewModel = WorkflowTriggerViewModel(
-        api: GithubAPI(
-            repositoryOwner: "p2p-org",
-            repositoryName: "p2p-wallet-ios",
-            personalAccessToken: "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"
-        )
-    )
+    @StateObject private var viewModel: WorkflowTriggerViewModel
     @State private var searchText = ""
+
+    init(
+        repositoryOwner: String,
+        repositoryName: String,
+        personalAccessToken: String
+    ) {
+        _viewModel = .init(wrappedValue: .init(api: .init(
+            repositoryOwner: repositoryOwner,
+            repositoryName: repositoryName,
+            personalAccessToken: personalAccessToken
+        )))
+    }
+
+    init(viewModel: WorkflowTriggerViewModel) {
+        _viewModel = .init(wrappedValue: viewModel)
+    }
 
     var body: some View {
         VStack {
@@ -128,6 +138,6 @@ struct WorkflowsTriggerView: View {
 
 struct WorkflowsTriggerView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkflowsTriggerView()
+        WorkflowsTriggerView(repositoryOwner: "", repositoryName: "", personalAccessToken: "")
     }
 }
