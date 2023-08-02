@@ -23,7 +23,7 @@ class WorkflowTriggerViewModel: ObservableObject {
     @Published private(set) var branches: [String] = []
 
     @Published private(set) var booleanOptions: [String: Bool] = [:]
-    @Published var stringOptions: [String: String] = [:]
+    @Published private(set) var stringOptions: [String: String] = [:]
 
     // MARK: - Actions
 
@@ -147,8 +147,6 @@ class WorkflowTriggerViewModel: ObservableObject {
             }
         }
     }
-
-    // MARK: - Helpers
 
     private func fetchWorkflows() async throws {
         workflows = try await api.getWorkflows()
