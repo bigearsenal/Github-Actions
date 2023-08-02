@@ -10,12 +10,6 @@ struct WorkflowsTriggerView: View {
     )
     @State private var searchText = ""
 
-    var filteredBranches: [String] {
-        viewModel.branches.filter { branch in
-            searchText.isEmpty ? true : branch.localizedCaseInsensitiveContains(searchText)
-        }
-    }
-
     var body: some View {
         VStack {
             if viewModel.isRefreshing {
@@ -89,7 +83,7 @@ struct WorkflowsTriggerView: View {
         }
 
         List {
-            ForEach(filteredBranches, id: \.self) { branch in
+            ForEach(viewModel.branches, id: \.self) { branch in
                 Button(action: {
                     viewModel.selectedBranch = branch
                 }) {
