@@ -40,7 +40,7 @@ struct WorkflowsTriggerView: View {
                 .eraseToAnyPublisher()
                 .async()
         }
-        .onAppear {
+        .task {
             viewModel.refresh.send()
         }
         .padding()
