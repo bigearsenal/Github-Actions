@@ -1,10 +1,14 @@
 import Foundation
 
 final class GithubAPI {
+    // MARK: - Properties
+
     private let repositoryOwner: String
     private let repositoryName: String
     private let personalAccessToken: String
     private let urlSession: URLSessionProtocol
+
+    // MARK: - Initializer
 
     init(
         repositoryOwner: String,
@@ -18,6 +22,9 @@ final class GithubAPI {
         self.urlSession = urlSession
     }
 
+    // MARK: - Public Methods
+
+    // Get workflows for the repository
     func getWorkflows() async throws -> [Workflow] {
         let baseURL = "https://api.github.com/repos/\(repositoryOwner)/\(repositoryName)/actions/workflows"
         let request = try createURLRequest(baseURL: baseURL)
@@ -25,14 +32,17 @@ final class GithubAPI {
         return try JSONDecoder().decode(WorkflowList.self, from: data).workflows
     }
 
-    func getBranches() async throws -> [String] {
-        let baseURL = "https://api.github.com/repos/\(repositoryOwner)/\(repositoryName)/branches"
+    // Get branches for the repository
+    func getBranches(page: Int = 1, perPage: Int = 100) async throws -> [String] {
+        let baseURL =
+            "https://api.github.com/repos/\(repositoryOwner)/\(repositoryName)/branches?page=\(page)&per_page=\(perPage)"
         let request = try createURLRequest(baseURL: baseURL)
         let (data, _) = try await fetchData(with: request, using: urlSession)
         let branchesResponse = try JSONDecoder().decode([Branch].self, from: data)
         return branchesResponse.map(\.name)
     }
 
+    // Get workflow options for a specific workflow by its ID
     func getWorkflowOptions(workflowId: UInt64) async throws -> [WorkflowOption] {
         let baseURL =
             "https://api.github.com/repos/\(repositoryOwner)/\(repositoryName)/actions/workflows/\(workflowId)/config"
@@ -42,7 +52,12 @@ final class GithubAPI {
         return configResponse.getWorkflowOptions()
     }
 
-    func triggerWorkflow(workflowName: String, selectedBranch: String, workflowInputs: [String: String]) async throws {
+    // Trigger a workflow with selected branch and workflow inputs
+    func triggerWorkflow(
+        workflowName: String,
+        selectedBranch: String,
+        workflowInputs: [String: String]
+    ) async throws {
         let baseURL =
             "https://api.github.com/repos/\(repositoryOwner)/\(repositoryName)/actions/workflows/\(workflowName)/dispatches"
         let request = try createURLRequest(
@@ -56,9 +71,14 @@ final class GithubAPI {
         }
     }
 
-    private func createURLRequest(baseURL: String, method: String = "GET",
-                                  body: [String: Any]? = nil) throws -> URLRequest
-    {
+    // MARK: - Private Methods
+
+    // Create a URLRequest with necessary headers and body
+    private func createURLRequest(
+        baseURL: String,
+        method: String = "GET",
+        body: [String: Any]? = nil
+    ) throws -> URLRequest {
         guard let url = URL(string: baseURL) else {
             throw NSError(domain: "Invalid URL", code: -1, userInfo: nil)
         }
@@ -75,10 +95,13 @@ final class GithubAPI {
         return request
     }
 
-    private func fetchData(with request: URLRequest,
-                           using session: URLSessionProtocol) async throws -> (Data, URLResponse)
-    {
+    // Fetch data using URLSessionProtocol
+    private func fetchData(
+        with request: URLRequest,
+        using session: URLSessionProtocol
+    ) async throws -> (Data, URLResponse) {
         let (data, response) = try await session.data(for: request)
+        print(NSString(string: .init(data: data, encoding: .utf8)!))
         return (data, response)
     }
 }

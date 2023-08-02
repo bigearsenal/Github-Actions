@@ -112,9 +112,18 @@ class WorkflowTriggerViewModel: ObservableObject {
         workflows = try await api.getWorkflows()
     }
 
-    private func fetchBranches() async throws {
-        branches = try await api.getBranches()
-        originalBranches = branches
+    private func fetchBranches(page: Int = 1, combinedResult: [String] = []) async throws {
+        let perPage = 100
+        let result = try await api.getBranches(page: page)
+        let combinedResult = combinedResult + result
+        if result.count < perPage {
+            branches = combinedResult
+            originalBranches = combinedResult
+            return
+        } else {
+            try await fetchBranches(page: page + 1, combinedResult: combinedResult)
+            return
+        }
     }
 
     private func getWorkflowInputs() -> [String: String] {
