@@ -23,7 +23,7 @@ struct WorkflowsTriggerView: View {
         }
         .padding()
         .onChange(of: searchText) { newValue in
-            viewModel.filterBranches(with: newValue)
+            viewModel.filterBranches.send(newValue)
         }
         .alert(item: $viewModel.alertMessage) { alertMessage in
             Alert(title: Text("Error"), message: Text(alertMessage.message), dismissButton: .default(Text("OK")))
@@ -115,7 +115,7 @@ struct WorkflowsTriggerView: View {
     @ViewBuilder
     private var triggerButton: some View {
         Button(action: {
-            viewModel.triggerGitHubWorkflow()
+            viewModel.triggerWorkflow.send()
         }) {
             Text("Trigger Workflow")
                 .padding()

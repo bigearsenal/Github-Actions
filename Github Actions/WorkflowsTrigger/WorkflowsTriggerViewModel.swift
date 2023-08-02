@@ -28,6 +28,9 @@ class WorkflowTriggerViewModel: ObservableObject {
     // MARK: - Actions
 
     let refresh = PassthroughSubject<Void, Never>()
+    let filterBranches = PassthroughSubject<String, Never>()
+    let fetchWorkflowOptions = PassthroughSubject<Void, Never>()
+    let triggerWorkflow = PassthroughSubject<Void, Never>()
 
     // MARK: - Properties
 
@@ -48,6 +51,27 @@ class WorkflowTriggerViewModel: ObservableObject {
             .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
             .sink { [weak self] in
                 self?._refresh()
+            }
+            .store(in: &subscriptions)
+
+        filterBranches
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
+            .sink { [weak self] searchText in
+                self?._filterBranches(with: searchText)
+            }
+            .store(in: &subscriptions)
+
+        fetchWorkflowOptions
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
+            .sink { [weak self] in
+                self?._fetchWorkflowOptions()
+            }
+            .store(in: &subscriptions)
+
+        triggerWorkflow
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
+            .sink { [weak self] in
+                self?._triggerWorkflow()
             }
             .store(in: &subscriptions)
     }
@@ -73,7 +97,7 @@ class WorkflowTriggerViewModel: ObservableObject {
         }
     }
 
-    func filterBranches(with searchText: String) {
+    private func _filterBranches(with searchText: String) {
         if searchText.isEmpty {
             branches = originalBranches
         } else {
@@ -81,7 +105,7 @@ class WorkflowTriggerViewModel: ObservableObject {
         }
     }
 
-    func fetchWorkflowOptions() {
+    private func _fetchWorkflowOptions() {
         isFetchingWorkflowOptions = true
         Task {
             do {
@@ -103,7 +127,7 @@ class WorkflowTriggerViewModel: ObservableObject {
         }
     }
 
-    func triggerGitHubWorkflow() {
+    private func _triggerWorkflow() {
         isTriggeringWorkflow = true
         Task {
             defer { isTriggeringWorkflow = false }
